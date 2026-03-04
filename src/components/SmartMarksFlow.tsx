@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Target, BookOpen, Clock, Zap, ArrowRight, Download, Mail, RefreshCw, LogIn } from 'lucide-react';
+import Image from 'next/image';
 
 import { getChaptersAndStats } from '@/lib/actions';
 import { generateRecommendations, RecommendationResult, StudentLevel, RecommendationMode } from '@/lib/recommendation';
@@ -28,7 +29,7 @@ export function SmartMarksFlow({ initialExams, initialSubjects }: Props) {
     // Form State
     const [examId, setExamId] = useState<string>('');
     const [subjectId, setSubjectId] = useState<string>('');
-    const [targetMax, setTargetMax] = useState<number>(30);
+    const [targetMax, setTargetMax] = useState<number>(100);
     const [availableHours, setAvailableHours] = useState<number | ''>('');
     const [level, setLevel] = useState<StudentLevel>('intermediate');
     const [mode, setMode] = useState<RecommendationMode>('maxROI');
@@ -79,8 +80,50 @@ export function SmartMarksFlow({ initialExams, initialSubjects }: Props) {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900">
-            <header className="px-6 py-4 bg-white border-b sticky top-0 z-10 flex justify-between items-center shadow-sm">
+        <div className="min-h-screen bg-gradient-to-br from-[#e6e6fa] via-[#eaddff] to-[#f4f2f9] flex flex-col font-sans text-slate-900 relative overflow-hidden">
+            {/* Top Banner */}
+            <div className="w-full bg-gradient-to-r from-[#ffe484] to-[#d4ffb8] py-2 text-center text-sm font-medium text-slate-800 flex items-center justify-center gap-2 relative z-50 shadow-sm">
+                <span>✨ Start now risk-free with our 14-day money-back guarantee! (Beta)</span>
+            </div>
+
+            {/* Background Decorative Elements */}
+            {step === 'LANDING' && (
+                <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                    {/* Pure CSS Sun */}
+                    <div className="absolute top-10 right-10 md:top-20 md:right-32 w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-[#ffd700] via-[#ffb347] to-[#ff8c00] animate-pulse-glow"
+                        style={{
+                            boxShadow: '0 0 80px 30px rgba(255, 179, 71, 0.4), inset 0 0 40px 10px rgba(255, 215, 0, 0.6)'
+                        }}
+                    />
+
+                    {/* Sun Glow Ring */}
+                    <div className="absolute top-0 right-0 md:top-10 md:right-20 w-80 h-80 md:w-96 md:h-96 rounded-full border-[10px] border-[#ffb347]/10 animate-[spin_30s_linear_infinite]"
+                        style={{
+                            boxShadow: '0 0 100px 20px rgba(255, 179, 71, 0.2) inset, 0 0 100px 20px rgba(255, 179, 71, 0.2)'
+                        }}
+                    />
+
+                    {/* Image Clouds */}
+                    <div className="absolute top-24 lg:right-1/3 right-10 animate-float-delayed drop-shadow-2xl opacity-90">
+                        <Image src="/assets/cloud.png" alt="Decorative cloud" width={300} height={150} className="w-48 md:w-64" priority />
+                    </div>
+
+                    <div className="absolute top-64 lg:left-1/4 left-10 animate-float-slow drop-shadow-2xl opacity-95">
+                        <Image src="/assets/cloud.png" alt="Decorative cloud" width={350} height={180} className="w-56 md:w-80" priority />
+                    </div>
+
+                    <div className="absolute bottom-20 right-1/4 animate-float drop-shadow-xl opacity-80 scale-x-[-1]">
+                        <Image src="/assets/cloud.png" alt="Decorative cloud" width={200} height={100} className="w-32 md:w-48" />
+                    </div>
+
+                    {/* Sparkles */}
+                    <div className="absolute top-40 left-1/3 text-indigo-400 animate-pulse text-2xl">✦</div>
+                    <div className="absolute bottom-1/3 right-1/4 text-purple-400 animate-pulse-glow delay-1000 text-xl font-bold">✨</div>
+                    <div className="absolute top-32 right-1/3 text-violet-400 animate-pulse delay-700 text-lg">✦</div>
+                </div>
+            )}
+
+            <header className="px-6 py-4 bg-white/30 backdrop-blur-md border-b border-white/20 sticky top-0 z-10 flex justify-between items-center shadow-sm">
                 <div className="flex items-center gap-2">
                     <div className="bg-primary/10 p-2 rounded-lg text-primary">
                         <Zap size={20} />
@@ -94,20 +137,20 @@ export function SmartMarksFlow({ initialExams, initialSubjects }: Props) {
                 )}
             </header>
 
-            <main className="flex-1 w-full max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+            <main className="flex-1 w-full max-w-6xl mx-auto p-4 md:p-6 lg:p-8 relative z-10">
 
                 {/* LANDING PAGE */}
                 {step === 'LANDING' && (
                     <div className="flex flex-col items-center justify-center py-20 text-center space-y-8 animate-in fade-in duration-500">
-                        <Badge variant="secondary" className="px-3 py-1 rounded-full text-sm font-medium">✨ Beta Version (Guest Access)</Badge>
-                        <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                            Minimum Study, <br className="hidden md:block" />
-                            <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Maximum Marks.</span>
+                        <Badge variant="secondary" className="px-3 py-1 rounded-full text-sm font-medium bg-white/50 backdrop-blur-sm border border-white/40 shadow-sm">✨ Beta Version (Guest Access)</Badge>
+                        <h2 className="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-800 leading-tight">
+                            Crack JEE with Data. <br className="hidden md:block" />
+                            <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-indigo-600">Minimum Study, Maximum Marks.</span>
                         </h2>
-                        <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                            Stop guessing what to study. Enter your target marks, and our data-driven engine will generate your personalized high-ROI study path based on historical paper weightage and frequency.
+                        <p className="text-lg text-slate-700 max-w-2xl mx-auto font-medium">
+                            Stop guessing what to study for JEE Mains and Advanced. Enter your target marks, and our data-driven engine will generate your personalized high-ROI study path based on historical paper weightage and frequency for Physics, Chemistry, and Mathematics.
                         </p>
-                        <Button size="lg" className="rounded-full h-14 px-8 text-lg font-semibold shadow-lg hover:shadow-xl transition-all" onClick={() => setStep('SETUP')}>
+                        <Button size="lg" className="rounded-full h-14 px-8 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all bg-violet-600 hover:bg-violet-700 text-white" onClick={() => setStep('SETUP')}>
                             Generate My Plan <ArrowRight className="ml-2 w-5 h-5" />
                         </Button>
                     </div>
@@ -146,8 +189,8 @@ export function SmartMarksFlow({ initialExams, initialSubjects }: Props) {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-sm font-semibold flex items-center gap-2"><Target size={16} /> Target Expected Marks</label>
-                                    <Input type="number" value={targetMax} onChange={e => setTargetMax(Number(e.target.value))} placeholder="e.g. 30" className="text-lg font-medium" />
+                                    <label className="text-sm font-semibold flex items-center gap-2"><Target size={16} /> Target Expected Marks (e.g. out of 100)</label>
+                                    <Input type="number" value={targetMax} onChange={e => setTargetMax(Number(e.target.value))} placeholder="e.g. 100" className="text-lg font-medium" />
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
